@@ -67,18 +67,23 @@
     }
 
     .unlock-btn {
-      background: #e51b24;
-      border: 6px solid #1e3a8a;
-      border-radius: 50%;
-      width: 120px;
-      height: 120px;
-      font-size: 50px;
+      background: transparent; /* 👈 Quité el color rojo de fondo */
+      border: none; /* 👈 Quité el borde azul de Spidey */
+      border-radius: 0;
+      width: auto;
+      height: auto;
       cursor: pointer;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-      animation: pulse 1.5s infinite;
       display: flex;
       justify-content: center;
       align-items: center;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* Tamaño controlado para el mini spiderman animado */
+    .unlock-btn img {
+      width: 130px;
+      height: auto;
+      object-fit: contain;
     }
 
     .unlock-text {
@@ -91,9 +96,9 @@
     }
 
     @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 27, 36, 0.7); }
-      70% { transform: scale(1.08); box-shadow: 0 0 0 15px rgba(229, 27, 36, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(229, 27, 36, 0); }
+      0% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(229, 27, 36, 0)); }
+      70% { transform: scale(1.08); filter: drop-shadow(0 10px 20px rgba(229, 27, 36, 0.6)); }
+      100% { transform: scale(1); filter: drop-shadow(0 0 0px rgba(229, 27, 36, 0)); }
     }
 
     /* --- CONTENEDOR INVISIBLE ELEVADO --- */
@@ -180,7 +185,10 @@
 <body>
 
   <div class="audio-unlocker" id="bloqueo-audio" onclick="entrarInvitacion()">
-    <button class="unlock-btn">🕷️</button>
+    <button class="unlock-btn">
+      <!-- 👈 Reemplazada la araña por la animación de Spiderman -->
+      <img src="spiderman-swing.gif" alt="Spider-Man columpiándose">
+    </button>
     <div class="unlock-text">Tienes una invitación especial...<br>¡Toca para abrir!</div>
   </div>
 
@@ -241,7 +249,7 @@
 
     function abrirWhatsApp() {
       const numero = "50661547634";
-      const mensaje = encodeURIComponent("¡Sí, si quiero ir contigo al cine a ver Spider-Man! 🕷️🕸️🎬");
+      const mensaje = encodeURIComponent("¡Sí, de todas maneras quiero ir contigo al cine a ver Spider-Man: Brand New Day! 🕷️🕸️🎬");
       
       const deepLink = `whatsapp://send?phone=${numero}&text=${mensaje}`;
       const webLink = `https://whatsapp.com{numero}&text=${mensaje}`;
