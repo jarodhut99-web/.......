@@ -210,7 +210,7 @@
 
     function entrarInvitacion() {
       if (!musicaIniciada) {
-        fuenteAudio.src = "SpiderMan_Theme.mp3?v=" + new Date().getTime();
+        fuenteAudio.src = "Music1.mp3?v=" + new Date().getTime();
         musica.load();
         
         musica.play()
@@ -241,7 +241,7 @@
 
     function abrirWhatsApp() {
       const numero = "50661547634";
-      const mensaje = encodeURIComponent("¡Sí, de todas maneras quiero ir contigo al cine a ver Spider-Man: Brand New Day! 🕷️🕸️🎬");
+      const mensaje = encodeURIComponent("¡Sí, si quiero ir contigo al cine a ver Spider-Man! 🕷️🕸️🎬");
       
       const deepLink = `whatsapp://send?phone=${numero}&text=${mensaje}`;
       const webLink = `https://whatsapp.com{numero}&text=${mensaje}`;
