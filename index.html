@@ -13,7 +13,7 @@
   <!-- Fuentes de Cómic y Películas de Marvel -->
   <link rel="preconnect" href="https://googleapis.com">
   <link rel="preconnect" href="https://gstatic.com" crossorigin>
-  <link href="https://googleapis.com/css2?family=Bangers&family=Permanent+Marker&family=Quicksand:wght=700&display=swap" rel="stylesheet">
+  <link href="https://googleapis.com" rel="stylesheet">
 
   <style>
     * { box-sizing: border-box; }
@@ -202,6 +202,54 @@
       text-shadow: 2px 2px 0px #000000;
       box-shadow: 0 6px 15px rgba(229, 27, 36, 0.3);
     }
+
+    /* 🎬 VENTANA EMERGENTE PARA EL MENSAJE (MODAL) */
+    .mensaje-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(10, 12, 16, 0.85);
+      z-index: 999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+    }
+
+    .mensaje-modal.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .mensaje-contenido {
+      background: #ffffff;
+      border: 4px solid #000000;
+      border-radius: 12px;
+      padding: 30px;
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      box-shadow: 10px 10px 0px #e51b24;
+      transform: scale(0.8) rotate(1deg);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .mensaje-modal.show .mensaje-contenido {
+      transform: scale(1) rotate(-1deg);
+    }
+
+    .mensaje-texto {
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 700;
+      color: #12151c;
+      font-size: 1.3rem;
+      line-height: 1.5;
+      white-space: pre-line;
+    }
   </style>
 </head>
 <body>
@@ -221,6 +269,13 @@
     <div class="buttons-container">
       <button id="btn-si" onclick="abrirWhatsApp()">¡SÍ, CLARO!</button>
       <button id="btn-no">No 😢</button>
+    </div>
+  </div>
+
+  <!-- Nueva ventana flotante que mostrará tu mensaje -->
+  <div class="mensaje-modal" id="modal-mensaje">
+    <div class="mensaje-contenido">
+      <p class="mensaje-texto" id="texto-pantalla"></p>
     </div>
   </div>
 
@@ -269,19 +324,26 @@
 
     function abrirWhatsApp() {
       const numero = "50661547634";
-      
-      // MODIFICADO: Estructura del mensaje unificada con el salto de línea (\n) y tu mensaje original intacto
       const textoMensaje = "¡Un gran poder conlleva una gran responsabilidad... y nuestra responsabilidad es ir a ver Spiderman al cine! 🕸️\n\n¡Sí, si quiero ir contigo al cine a ver Spider-Man! 🫶🏼🕷️🕸️🎬";
-      const mensaje = encodeURIComponent(textoMensaje);
       
-      const deepLink = `whatsapp://send?phone=${numero}&text=${mensaje}`;
-      const webLink = `https://wa.me{numero}?text=${mensaje}`;
-      
-      window.location.href = deepLink;
-      
+      // Muestra el mensaje en la pantalla del sitio web primero
+      const modal = document.getElementById('modal-mensaje');
+      const textoPantalla = document.getElementById('texto-pantalla');
+      textoPantalla.textContent = textoMensaje;
+      modal.classList.add('show');
+
+      // Espera 3.5 segundos (3500ms) antes de ejecutar el envío a WhatsApp
       setTimeout(() => {
-        window.open(webLink, '_blank');
-      }, 250);
+        const mensaje = encodeURIComponent(textoMensaje);
+        const deepLink = `whatsapp://send?phone=${numero}&text=${mensaje}`;
+        const webLink = `https://wa.me{numero}?text=${mensaje}`;
+        
+        window.location.href = deepLink;
+        
+        setTimeout(() => {
+          window.open(webLink, '_blank');
+        }, 250);
+      }, 3500); 
     }
   </script>
 </body>
